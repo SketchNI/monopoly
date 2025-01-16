@@ -19,12 +19,13 @@ class MessageSentEvent implements ShouldBroadcast, ShouldQueue
         public string $type,
         public Message $message,
         public User $from,
+        public string $channel,
     ) {}
 
     public function broadcastOn(): array
     {
         return [
-            new PresenceChannel('lobby'),
+            new PresenceChannel($this->channel),
         ];
     }
 

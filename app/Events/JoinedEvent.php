@@ -17,19 +17,13 @@ class JoinedEvent implements ShouldBroadcast, ShouldQueue
 
     public function __construct(
         public User $user,
+        public string $channel = 'lobby'
     ) {}
 
     public function broadcastOn(): array
     {
         return [
-            new PresenceChannel('lobby'),
-        ];
-    }
-
-    public function broadcastWith(): array
-    {
-        return [
-            'user' => $this->user,
+            new PresenceChannel($this->channel),
         ];
     }
 

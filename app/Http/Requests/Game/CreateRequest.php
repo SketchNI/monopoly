@@ -11,7 +11,7 @@ class CreateRequest extends FormRequest
         return [
             'game_id' => ['required', 'alpha_num:ascii', 'unique:games,game_id'],
             'color' => ['required', 'hex_color'],
-            'token' => ['required', 'in_array:🐕,🚗,🚢,🎩,🐈,🦆,🐎,💩,🎱,✈️,🚂,👟'],
+            'token' => ['required', 'in:🐕,🚗,🚢,🎩,🐈,🦆,🐎,💩,🎱,✈️,🚂,👟'],
             'player_count' => ['required', 'integer', 'min:2', 'max:6'],
         ];
     }

@@ -11,15 +11,18 @@ class MessageController extends Controller
 {
     public function store(CreateRequest $request): JsonResponse
     {
-        $message = new Message();
+        $message = new Message;
         $message->user_id = auth()->id();
         if ($request->has('game_id')) {
             $message->game_id = $request->get('game_id');
+            $channel = sprintf('game.%s', $request->get('game_id'));
+        } else {
+            $channel = 'lobby';
         }
         $message->message = $request->get('message');
         $message->save();
 
-        MessageSentEvent::dispatch('message', $message->fresh(), auth()->user());
+        MessageSentEvent::dispatch('message', $message->fresh(), auth()->user(), $channel);
 
         return response()->json(['type' => 'message', 'content' => $message->fresh(), auth()->user()], 200);
     }

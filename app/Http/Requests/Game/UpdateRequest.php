@@ -10,9 +10,8 @@ class UpdateRequest extends FormRequest
     {
         return [
             'game_id' => ['required', 'alpha_num:ascii', 'exists:games,game_id'],
-            'name' => ['required', 'alpha:ascii'],
             'color' => ['required', 'hex_color'],
-            'token' => ['required', 'in_array:🐕,🏎️,🚢,🎩,🐈,🦆,🐎,💩,🎱,✈️,🚂,👟'],
+            'token' => ['required', 'in:🐕,🚗,🚢,🎩,🐈,🦆,🐎,💩,🎱,✈️,🚂,👟'],
         ];
     }
 

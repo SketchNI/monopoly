@@ -10,7 +10,7 @@ class CreateRequest extends FormRequest
     {
         return [
             'message' => ['required', 'string', 'max:2048'],
-            'game_id' => ['nullable', 'integer', 'exists:games,id'],
+            'game_id' => ['nullable', 'string', 'exists:games,game_id'],
         ];
     }
 

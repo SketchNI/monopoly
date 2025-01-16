@@ -25,6 +25,12 @@ class User extends Authenticatable
         'username',
     ];
 
+    protected $hidden = [
+        'password',
+        'created_at',
+        'updated_at',
+    ];
+
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
