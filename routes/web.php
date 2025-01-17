@@ -20,5 +20,7 @@ Route::middleware(['auth'])->group(static function () {
         Route::post('/', [GameController::class, 'store'])->name('store');
         Route::put('{game:game_id}', [GameController::class, 'update'])->name('update');
         Route::get('{game:game_id}', [GameController::class, 'show'])->name('show');
+
+        Route::put('{game:game_id}/command', [GameController::class, 'run_command'])->name('command');
     });
 });

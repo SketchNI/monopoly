@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Game\Command;
+use App\Enums\CommandType;
 use App\Events\JoinedEvent;
 use App\Http\Requests\Game\CreateRequest;
 use App\Http\Requests\Game\UpdateRequest;
@@ -10,6 +12,7 @@ use App\Models\GameUser;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Response;
 
 class GameController extends Controller
@@ -26,7 +29,6 @@ class GameController extends Controller
         ]);
 
         GameUser::create(['game_id' => $game->id, 'user_id' => auth()->id()]);
-
 
         return redirect()->route('games.show', ['user' => $user]);
     }
@@ -57,5 +59,10 @@ class GameController extends Controller
         return inertia('Game',
             compact('game', 'messages', 'players', 'user', 'in_progress_games')
         );
+    }
+
+    public function run_command(Game $game, Request $request): mixed
+    {
+        return Command::run($request->get('command'), $request->get('params', []));
     }
 }
