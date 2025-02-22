@@ -16,6 +16,9 @@ class State
 
     public int $current_player;
 
+    /**
+     * @var array<Player>
+     */
     public array $players = [];
 
     public int $dice_1;
@@ -26,11 +29,13 @@ class State
     {
         /*$this->community_chest = Card::whereType('chest')->get()->toArray();
         $this->chance = Card::whereType('chance')->get()->toArray();*/
-        $this->properties = Property::limit(5)->get()->toArray();
-        $this->players = $game->players()->get(['id', 'username', 'color', 'token'])->toArray();
+        //$this->properties = Property::limit(5)->get()->toArray();
+        $this->players = $game->players()->get(['id', 'username', 'color', 'token'])->each(function ($player) {
+            return new Player($player)->get();
+        })->toArray();
     }
 
-    public function setupGame()
+    public function setupGame(): array
     {
         return [
             'players' => $this->players,
@@ -40,8 +45,12 @@ class State
         ];
     }
 
-    private function switchPlayer()
+    private function switchPlayer(): void
     {
-        $this->current_player = '';
+        if (count($this->players) === $this->current_player) {
+            $this->current_player = 0;
+        }
+
+        $this->current_player += 1;
     }
 }

@@ -11,9 +11,9 @@ class Command
         'doubles' => 0,
     ];
 
-    private static function _mergeParams(array $params): void
+    private static function _mergeParams(array $params): array
     {
-        self::$params = array_merge(self::$params, $params);
+        return self::$params = array_merge(self::$params, $params);
     }
 
     /**
@@ -23,8 +23,8 @@ class Command
     {
         self::_mergeParams($params);
 
-        $dice_1 = random_int(1, 1);
-        $dice_2 = random_int(1, 1);
+        $dice_1 = random_int(1, 6);
+        $dice_2 = random_int(1, 6);
 
         if ($dice_1 === $dice_2) {
             if (self::$params['doubles'] === 3) {
@@ -39,8 +39,7 @@ class Command
 
     private static function go_to_jail(array $params): array
     {
-        self::_mergeParams($params);
-
+        return self::_mergeParams($params);
     }
 
     public static function run($command, array $params = [])
